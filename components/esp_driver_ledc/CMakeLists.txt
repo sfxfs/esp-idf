@@ -8,14 +8,17 @@ if(CONFIG_SOC_LEDC_SUPPORTED)
 endif()
 
 if(${target} STREQUAL "linux")
+    set(requires "")
     set(priv_requires "")
 else()
-    set(priv_requires esp_pm esp_driver_gpio)
+    set(requires esp_driver_gpio)
+    set(priv_requires esp_pm)
 endif()
 
 idf_component_register(
     SRCS ${srcs}
     INCLUDE_DIRS ${public_include}
+    REQUIRES "${requires}"
     PRIV_REQUIRES "${priv_requires}"
     LDFRAGMENTS "linker.lf"
 )
